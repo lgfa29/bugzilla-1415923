@@ -1,0 +1,47 @@
+<html>
+  <script type="text/javascript">
+    function addLog(msg) {
+      let ts = new Date();
+      let p = document.createElement("p");
+      let log = document.createTextNode(ts + " - " + msg);
+      p.appendChild(log);
+
+      let body = document.getElementById("body");
+      body.appendChild(p);
+    }
+
+    function makeRequest() {
+      let url = window.location.href + "data";
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function () {
+        if (req.readyState === 4) {
+          addLog("request complete");
+        }
+      };
+      req.open("GET", url);
+      req.send();
+    }
+
+    function updateDOM() {
+      addLog("DOM update");
+    }
+
+    setInterval(makeRequest, 1000);
+    setInterval(updateDOM, 1000);
+  </script>
+  <style>
+    body {
+      max-width: 1200px;
+      width: 80vw;
+      margin: 10px auto;
+    }
+
+    p {
+      font-family: monospace;
+      margin: 0;
+    }
+  </style>
+  <body id="body">
+    <code id="code"></code>
+  </body>
+</html>
